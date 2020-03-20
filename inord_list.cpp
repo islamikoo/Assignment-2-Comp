@@ -9,10 +9,13 @@ MyList::MyList()
 	NumOfElem = 0;
 }
 
-void MyList::insert(const ListElement& e)
+///////////////////////////////////////////////////////////////////////
+
+void MyList::insert(const ListElement& e , int x)
 {
 	Node* NewNode = new Node;
 	NewNode->data = e;
+	NewNode->LineNum = x;
 	if (head == NULL || e <= head->data )
 	{
 		NewNode->link = head;
@@ -28,6 +31,8 @@ void MyList::insert(const ListElement& e)
 	}
 	NumOfElem++;
 }
+
+///////////////////////////////////////////////////////////////////////
 
 void MyList::remove(const ListElement& e)
 {
@@ -58,10 +63,14 @@ void MyList::remove(const ListElement& e)
 	NumOfElem--;
 }
 
+///////////////////////////////////////////////////////////////////////
+
 int MyList::GetNumOfElem()
 {
 	return NumOfElem;
 }
+
+///////////////////////////////////////////////////////////////////////
 
 void MyList::PrintList()
 {
@@ -71,4 +80,30 @@ void MyList::PrintList()
 		cout << temp->data << endl;
 		temp = temp->link;
 	}
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::FileRead(string FileName)
+{
+	string line;
+	string tmp;
+	int i=1;
+    ifstream myfile;
+    myfile.open(FileName);
+   if(!myfile.is_open())
+   {
+      perror("File doesn't exist !!");
+      exit(EXIT_FAILURE);
+   }
+    while(getline(myfile, line))
+	{
+		istringstream ss(line);
+		do
+		{
+			ss >> tmp;
+			this->insert(tmp,i);
+		} while(ss);
+		i++;
+    }
 }

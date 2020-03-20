@@ -1,12 +1,14 @@
 #include <iostream>
+#include <fstream>
+#include <string.h>
+#include <sstream>
 
-using namespace std;
-
-typedef string ListElement;
+typedef std::string ListElement;
 
 struct Node
 {
 	ListElement data;
+	int LineNum;
 	Node* link;
 };
 
@@ -18,8 +20,9 @@ private:
 	Node* tail;
 public:
 	MyList();
-	void insert(const ListElement& e);
-	void remove(const ListElement& e);
+	void insert(const ListElement& ,int);
+	void remove(const ListElement& );
 	void PrintList();
 	int GetNumOfElem();
+	void FileRead(std::string );
 };
