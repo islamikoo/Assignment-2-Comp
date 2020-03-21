@@ -87,7 +87,6 @@ void MyList::PrintList()
 void MyList::FileRead(string FileName)
 {
 	string line;
-	string tmp;
 	int i=1;
     ifstream myfile;
     myfile.open(FileName);
@@ -101,9 +100,12 @@ void MyList::FileRead(string FileName)
 		istringstream ss(line);
 		do
 		{
-			ss >> tmp;
+			string tmp;
+			if(!(ss >> tmp))
+				break;
 			this->insert(tmp,i);
 		} while(ss);
 		i++;
     }
+	myfile.close();
 }
