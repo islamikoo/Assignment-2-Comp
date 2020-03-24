@@ -7,6 +7,9 @@ MyList::MyList()
 	head = NULL;
 	tail = NULL;
 	NumOfElem = 0;
+	NumOfChars=0;
+	NumOfSpaces=0;
+	TotNumOfChars=0;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -36,8 +39,8 @@ void MyList::insert(const ListElement& e , int x)
 
 void MyList::remove(const ListElement& e)
 {
-	Node* NewNode = new Node;
-	NewNode->data = e;
+/*	Node* NewNode = new Node;
+	NewNode->data = e;*/
 	if (head == NULL)
 	{
 		cout << "ERROR List is empty" << endl;
@@ -65,13 +68,6 @@ void MyList::remove(const ListElement& e)
 
 ///////////////////////////////////////////////////////////////////////
 
-int MyList::GetNumOfElem()
-{
-	return NumOfElem;
-}
-
-///////////////////////////////////////////////////////////////////////
-
 void MyList::PrintList()
 {
 	Node* temp = head;
@@ -87,6 +83,7 @@ void MyList::PrintList()
 void MyList::FileRead(string FileName)
 {
 	string line;
+	string chars = ",;:'`&.[]{}()";
 	int i=1;
     ifstream myfile;
     myfile.open(FileName);
@@ -97,6 +94,11 @@ void MyList::FileRead(string FileName)
    }
     while(getline(myfile, line))
 	{
+		line.erase(remove_if(line.begin() , line.end() , [&chars](const char& c) {
+			return chars.find(c) != string::npos ;}), line.end());
+		NumOfSpaces += count(line.begin(), line.end(), ' ');
+		NumOfCarriages += count(line.begin(), line.end(), '\r');
+		NumOfChars += (line.length() - (NumOfCarriages + NumOfSpaces));
 		istringstream ss(line);
 		do
 		{
@@ -107,5 +109,43 @@ void MyList::FileRead(string FileName)
 		} while(ss);
 		i++;
     }
+	TotNumOfChars = NumOfCarriages + NumOfChars + NumOfSpaces ;
 	myfile.close();
 }
+
+///////////////////////////////////////////////////////////////////////
+
+int MyList::GetNumOfChars()
+{
+	return NumOfChars;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+int MyList::GetNumOfSpaces()
+{
+	return NumOfSpaces;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+int MyList::GetTotNumOfChars()
+{
+	return TotNumOfChars;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+int MyList::GetNumOfCarriages()
+{
+	return NumOfCarriages;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+int MyList::GetNumOfElem()
+{
+	return NumOfElem;
+}
+
+///////////////////////////////////////////////////////////////////////
