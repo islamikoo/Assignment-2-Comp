@@ -124,29 +124,40 @@ void MyList::SetUpList()
 	bool Found = false;
 	while (temp != NULL)
 	{
-		if(temp->data[0] == char(i) && !Found)
+		if(temp->data[0] > char(i))
 		{
-			Locations[i-96] = temp;
-			Found = true ;
-			if(i==122)
+			i = int(temp->data[0]);
+			continue;
+		}
+		else if(temp->data[0] < char(i))
+		{
+			Locations[0] = temp;
+			temp = temp->link;
+		}
+		else
+		{
+			if(temp->data[0] == char(i) && !Found)
+			{
+				Locations[i-96] = temp;
+			    Found = true ;
+			    if(i==122)
+					break;
+				if(temp->data[0] != temp->link->data[0])
+				{
+					i += (temp->link->data[0] - temp->data[0]) ;
+			        Found = false;
+				}
+			}
+			else if(temp->link == NULL)
 				break;
-			if(temp->data[0] != temp->link->data[0])
+			else if(temp->data[0] != temp->link->data[0] && Found)
 			{
 				i += (temp->link->data[0] - temp->data[0]) ;
 			    Found = false;
 			}
+			temp = temp->link;
 		}
-		else if(temp->link == NULL)
-			break;
-		else if(temp->data[0] != temp->link->data[0] && Found)
-		{
-			i += (temp->link->data[0] - temp->data[0]) ;
-			Found = false;
-		}
-		temp = temp->link;
 	}
-	if(Locations[1]->data != head->data)
-		Locations[0] = head ;
 }
 
 ///////////////////////////////////////////////////////////////////////
