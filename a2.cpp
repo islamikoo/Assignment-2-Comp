@@ -8,6 +8,7 @@ int main(int argc , char** argv)
 {
 	MyList List;
 	List.FileRead("test.txt");
-	List.PrintList();
+	//List.PrintList();
+	List.test();
 	return 0;
 }

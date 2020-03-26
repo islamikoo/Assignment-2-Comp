@@ -23,15 +23,13 @@ private:
 	int NumOfCarriages;
 	Node* head;
 	Node* tail;
+	Node* Locations[27];
 public:
 	MyList();
 	void insert(const ListElement& ,int);
 	void remove(const ListElement& );
 	void PrintList();
-	int GetNumOfElem();
-	int GetNumOfChars();
-	int GetNumOfSpaces();
-	int GetTotNumOfChars();
-	int GetNumOfCarriages();
 	void FileRead(std::string );
+	void SetUpList();
+	void test();
 };
