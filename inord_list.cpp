@@ -68,18 +68,6 @@ void MyList::remove(const ListElement& e)
 
 ///////////////////////////////////////////////////////////////////////
 
-void MyList::PrintList()
-{
-	Node* temp = head;
-	while (temp != NULL)
-	{
-		cout << temp->data << endl;
-		temp = temp->link;
-	}
-}
-
-///////////////////////////////////////////////////////////////////////
-
 void MyList::FileRead(string FileName)
 {
 	string line;
@@ -162,13 +150,55 @@ void MyList::SetUpList()
 
 ///////////////////////////////////////////////////////////////////////
 
-void MyList::test()
+void MyList::Execute(string FileName)
 {
-	int i=0;
-	while (i<27)
-	{
-		if(Locations[i] != NULL)
-			cout << Locations[i]->data << endl;
-		i++;
-	}
+	ifstream myfile;
+	string line;
+    myfile.open(FileName);
+   if(!myfile.is_open())
+   {
+      perror("File doesn't exist !!");
+      exit(EXIT_FAILURE);
+   }
+   
+   while(getline(myfile, line))
+	   Check(line);
+   myfile.close();
 }
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::Check(ListElement Command)
+{
+	if(Command == "wordCount")
+		wordCount();
+	else if(Command == "distWords")
+		distWords();
+	else if(Command == "charCount")
+		charCount();
+	else
+		cout << "Undefined command" << endl;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::wordCount()
+{
+	cout << NumOfElem << " words" << endl;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::distWords()
+{
+	
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::charCount()
+{
+	
+}
+
+///////////////////////////////////////////////////////////////////////

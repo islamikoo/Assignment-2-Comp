@@ -28,8 +28,13 @@ public:
 	MyList();
 	void insert(const ListElement& ,int);
 	void remove(const ListElement& );
-	void PrintList();
 	void FileRead(std::string );
 	void SetUpList();
-	void test();
+	/////// Assignment Methods
+	void wordCount();
+	void distWords();
+	void charCount();
+	/////////////
+	void Execute(std::string );
+	void Check(ListElement );
 };

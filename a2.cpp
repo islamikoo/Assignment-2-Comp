@@ -4,11 +4,17 @@
 
 using namespace std;
 
+
 int main(int argc , char** argv)
 {
-	MyList List;
-	List.FileRead("test.txt");
-	//List.PrintList();
-	List.test();
+	if(argc != 3)
+	{
+		cout << "Incorrect number of arguments" << endl;
+		return 0;
+	}
+	MyList DFile ;
+	DFile.FileRead(argv[1]);
+	DFile.Execute(argv[2]);
+	
 	return 0;
 }
