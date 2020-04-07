@@ -5,11 +5,8 @@ using namespace std;
 MyList::MyList()
 {
 	head = NULL;
-	tail = NULL;
 	NumOfElem = 0;
 	NumOfChars=0;
-	NumOfSpaces=0;
-	TotNumOfChars=0;
 	for(int i=0; i<27 ;i++)
 		Locations[i] = NULL;
 }
@@ -23,47 +20,28 @@ void MyList::insert(const ListElement& e , int x)
 	NewNode->LineNum = x;
 	if (head == NULL || e <= head->data )
 	{
-		NewNode->link = head;
-		head = NewNode;
+		if(head != NULL && e==head->data)
+			head->NumOfOcc++;
+		else
+		{
+			NewNode->link = head;
+			head = NewNode;
+		}
 	}
 	else
 	{
 		Node* temp = head;
 		while (temp->link != NULL && e > temp->link->data)
 			temp = temp->link;
-		NewNode->link = temp->link;
-		temp->link = NewNode;
-	}
-	NumOfElem++;
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void MyList::remove(const ListElement& e)
-{
-	if (head == NULL)
-	{
-		cout << "ERROR List is empty" << endl;
-		exit(0);
-	}
-	else if (head->data == e)
-	{
-		head = head->link;
-	}
-	else
-	{
-		Node* temp = head;
-		while (temp->link != NULL)
+		if(temp->link != NULL && e==temp->link->data)
+			temp->link->NumOfOcc++;
+		else
 		{
-			if (temp->link->data == e)
-			{
-				temp->link = temp->link->link;
-				break;
-			}
-			temp = temp->link;
+			NewNode->link = temp->link;
+			temp->link = NewNode;
 		}
 	}
-	NumOfElem--;
+	NumOfElem++;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -84,9 +62,7 @@ void MyList::FileRead(string FileName)
 	{
 		line.erase(remove_if(line.begin() , line.end() , [&chars](const char& c) {
 			return chars.find(c) != string::npos ;}), line.end());
-		NumOfSpaces += count(line.begin(), line.end(), ' ');
-		NumOfCarriages += count(line.begin(), line.end(), '\r');
-		NumOfChars += (line.length() - (NumOfCarriages + NumOfSpaces));
+		NumOfChars += line.length() + 1 ;
 		istringstream ss(line);
 		do
 		{
@@ -98,54 +74,7 @@ void MyList::FileRead(string FileName)
 		} while(ss);
 		i++;
     }
-	TotNumOfChars = NumOfCarriages + NumOfChars + NumOfSpaces ;
 	myfile.close();
-	this->SetUpList();
-}
-
-///////////////////////////////////////////////////////////////////////
-
-void MyList::SetUpList()
-{
-	Node* temp = head;
-	int i=97;
-	bool Found = false;
-	while (temp != NULL)
-	{
-		if(temp->data[0] > char(i))
-		{
-			i = int(temp->data[0]);
-			continue;
-		}
-		else if(temp->data[0] < char(i))
-		{
-			Locations[0] = temp;
-			temp = temp->link;
-		}
-		else
-		{
-			if(temp->data[0] == char(i) && !Found)
-			{
-				Locations[i-96] = temp;
-			    Found = true ;
-			    if(i==122)
-					break;
-				if(temp->data[0] != temp->link->data[0])
-				{
-					i += (temp->link->data[0] - temp->data[0]) ;
-			        Found = false;
-				}
-			}
-			else if(temp->link == NULL)
-				break;
-			else if(temp->data[0] != temp->link->data[0] && Found)
-			{
-				i += (temp->link->data[0] - temp->data[0]) ;
-			    Found = false;
-			}
-			temp = temp->link;
-		}
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -168,7 +97,7 @@ void MyList::Execute(string FileName)
 
 ///////////////////////////////////////////////////////////////////////
 
-void MyList::Check(ListElement Command)
+void MyList::Check(string Command)
 {
 	if(Command == "wordCount")
 		wordCount();
@@ -191,14 +120,21 @@ void MyList::wordCount()
 
 void MyList::distWords()
 {
-	
+	Node *temp = head;
+	int i=0;
+	while (temp != NULL)
+	{
+		i++;
+		temp = temp->link;
+	}
+	cout << i << " distinct words" << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 void MyList::charCount()
 {
-	
+	cout << NumOfChars-1 << " characters" << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////

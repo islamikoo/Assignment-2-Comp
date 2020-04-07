@@ -10,6 +10,7 @@ struct Node
 {
 	ListElement data;
 	int LineNum;
+	int NumOfOcc=1;
 	Node* link;
 };
 
@@ -17,12 +18,8 @@ class MyList
 {
 private:
 	int NumOfChars;
-	int NumOfSpaces;
-	int TotNumOfChars;
 	int NumOfElem;
-	int NumOfCarriages;
 	Node* head;
-	Node* tail;
 	Node* Locations[27];
 public:
 	MyList();
