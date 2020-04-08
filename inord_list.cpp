@@ -54,7 +54,7 @@ void MyList::insert(const ListElement& e, int x)
 			head = NewNode;
 			head->LineNum = to_string(x);
 		}
-		if ((head->LineNum.find(to_string(x)) + 1))
+		if (head->LineNum.find(to_string(x)) != string::npos)
 			goto J1;
 		head->LineNum += to_string(x);
 	}
@@ -65,10 +65,10 @@ void MyList::insert(const ListElement& e, int x)
 			temp = temp->link;
 		if (temp->link != NULL && e == temp->link->data)
 		{
+			temp->link->NumOfOcc++;
 			if ((temp->link->LineNum.find(to_string(x)) + 1))
 				goto J1;
 			temp->link->LineNum += (" " + to_string(x));
-			temp->link->NumOfOcc++;
 		}
 		else
 		{
@@ -77,10 +77,9 @@ void MyList::insert(const ListElement& e, int x)
 			temp->link = NewNode;
 		}
 	}
-	J1:
+J1:
 	NumOfElem++;
 }
-
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -246,7 +245,7 @@ void MyList::countWord(ListElement& word)
 
 void MyList::starting(ListElement& word)
 {
-	//UselessFuncts::str_low(word);
+	UselessFuncts::str_low(word);
 	int length = word.length();
 	Node* temp = head;
 	int ch = 0;
@@ -268,13 +267,13 @@ void MyList::starting(ListElement& word)
 
 void MyList::containing(ListElement& word)
 {
-	//UselessFuncts::str_low(word);
+	UselessFuncts::str_low(word);
 	int length = word.length();
 	Node* temp = head;
 	int ch = 0;
 	while (temp != NULL)
 	{
-		if ((temp->data.find(word) + 1))
+		if (temp->data.find(word) != string::npos)
 		{
 			ch = 1;
 			cout << temp->data << ": " << temp->NumOfOcc << "\t";
@@ -296,15 +295,13 @@ void MyList::search(ListElement& word)
 	int ch = 0;
 	while (temp != NULL)
 	{
-		if ((temp->data.find(word) + 1))
+		if (temp->data.find(word) != string::npos)
 		{
 			ch = 1;
-			cout << temp->data << ": lines " << temp->LineNum << "\t";
+			cout << temp->data << ": lines " << temp->LineNum << "\n";
 		}
 		temp = temp->link;
 	}
 	if (ch == 0)
-		cout << "Word not found";
-	cout << endl;
-	
+		cout << "Word not found" << endl;	
 }
