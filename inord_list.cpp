@@ -1,6 +1,23 @@
 #include "inord_list.h"
+#include <string.h>
 
 using namespace std;
+
+/////////////////////////////Some Utility functions///////////////////////////////////////
+void UselessFuncts::str_low(string &word)
+{
+	for (char& x : word)
+		x = tolower(int(x));
+}
+
+void UselessFuncts::str_replace(string &word,const string &chars)
+{
+	for (char& x : word)
+		if (chars.find(x) != std::string::npos)
+			x = ' ';
+}
+
+///////////////////////////////////////////////////////////////////////
 
 MyList::MyList()
 {
@@ -49,7 +66,7 @@ void MyList::insert(const ListElement& e , int x)
 void MyList::FileRead(string FileName)
 {
 	string line;
-	string chars = ",;:'`&.[]{}()";
+	string chars = ",.\t";
 	int i=1;
     ifstream myfile;
     myfile.open(FileName);
@@ -60,8 +77,7 @@ void MyList::FileRead(string FileName)
    }
     while(getline(myfile, line))
 	{
-		line.erase(remove_if(line.begin() , line.end() , [&chars](const char& c) {
-			return chars.find(c) != string::npos ;}), line.end());
+		UselessFuncts::str_replace(line, chars);
 		NumOfChars += line.length() + 1 ;
 		istringstream ss(line);
 		do
@@ -69,7 +85,7 @@ void MyList::FileRead(string FileName)
 			string tmp;
 			if(!(ss >> tmp))
 				break;
-			transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+			UselessFuncts::str_low(tmp);
 			this->insert(tmp,i);
 		} while(ss);
 		i++;

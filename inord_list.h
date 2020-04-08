@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <string.h>
 #include <sstream>
-#include <algorithm>
 
 typedef std::string ListElement;
 
@@ -34,4 +32,13 @@ public:
 	/////////////
 	void Execute(std::string );
 	void Check(ListElement );
+};
+
+
+
+class UselessFuncts
+{
+public:
+	static void str_low(std::string& );
+	static void str_replace(std::string& ,const std::string& );
 };
