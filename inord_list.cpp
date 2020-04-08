@@ -33,42 +33,54 @@ MyList::MyList()
 	head = NULL;
 	NumOfElem = 0;
 	NumOfChars=0;
-	for(int i=0; i<27 ;i++)
-		Locations[i] = NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void MyList::insert(const ListElement& e , int x)
+void MyList::insert(const ListElement& e, int x)
 {
 	Node* NewNode = new Node;
 	NewNode->data = e;
-	NewNode->LineNum = x;
-	if (head == NULL || e <= head->data )
+	if (head == NULL || e <= head->data)
 	{
-		if(head != NULL && e==head->data)
+		if (head != NULL && e == head->data)
+		{
+			head->LineNum += (" " + to_string(x));
 			head->NumOfOcc++;
+		}
 		else
 		{
 			NewNode->link = head;
 			head = NewNode;
+			head->LineNum = to_string(x);
 		}
+		if ((head->LineNum.find(to_string(x)) + 1))
+			goto J1;
+		head->LineNum += to_string(x);
 	}
 	else
 	{
 		Node* temp = head;
 		while (temp->link != NULL && e > temp->link->data)
 			temp = temp->link;
-		if(temp->link != NULL && e==temp->link->data)
+		if (temp->link != NULL && e == temp->link->data)
+		{
+			if ((temp->link->LineNum.find(to_string(x)) + 1))
+				goto J1;
+			temp->link->LineNum += (" " + to_string(x));
 			temp->link->NumOfOcc++;
+		}
 		else
 		{
 			NewNode->link = temp->link;
+			NewNode->LineNum = to_string(x);
 			temp->link = NewNode;
 		}
 	}
+	J1:
 	NumOfElem++;
 }
+
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -151,6 +163,8 @@ void MyList::Check(string Command)
 		starting(arr[1]);
 	else if (arr[0] == "containing")
 		containing(arr[1]);
+	else if (arr[0] == "search")
+		search(arr[1]);
 	else
 		cout << "Undefined command" << endl;
 }
@@ -208,44 +222,89 @@ void MyList::frequentWord()
 
 ///////////////////////////////////////////////////////////////////////
 
-void MyList::countWord(const ListElement& word)
+void MyList::countWord(ListElement& word)
 {
+	UselessFuncts::str_low(word);
 	Node* temp = head;
+	int ch = 0;
 	while (temp != NULL)
 	{
 		if (temp->data == word)
+		{
+			ch = 1;
 			break;
+		}
 		temp = temp->link;
 	}
-	cout << temp->data << " is repeated " << temp->NumOfOcc << " times" << endl;
+	if(ch==0)
+		cout << word << " is repeated " << 0 << " times" << endl;
+	else
+		cout << temp->data << " is repeated " << temp->NumOfOcc << " times" << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void MyList::starting(const ListElement& word)
+void MyList::starting(ListElement& word)
 {
+	//UselessFuncts::str_low(word);
 	int length = word.length();
 	Node* temp = head;
+	int ch = 0;
 	while (temp != NULL)
 	{
 		if (temp->data.substr(0, length) == word)
+		{
+			ch = 1;
 			cout << temp->data << ": " << temp->NumOfOcc << "\t";
+		}
 		temp = temp->link;
 	}
+	if (ch == 0)
+		cout << "Word not found";
 	cout << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////
 
-void MyList::containing(const ListElement& word)
+void MyList::containing(ListElement& word)
 {
+	//UselessFuncts::str_low(word);
 	int length = word.length();
 	Node* temp = head;
+	int ch = 0;
 	while (temp != NULL)
 	{
-		if ((temp->data.find(word)+1))
+		if ((temp->data.find(word) + 1))
+		{
+			ch = 1;
 			cout << temp->data << ": " << temp->NumOfOcc << "\t";
+		}
 		temp = temp->link;
 	}
+	if (ch == 0)
+		cout << "Word not found";
 	cout << endl;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::search(ListElement& word)
+{
+	UselessFuncts::str_low(word);
+	int length = word.length();
+	Node* temp = head;
+	int ch = 0;
+	while (temp != NULL)
+	{
+		if ((temp->data.find(word) + 1))
+		{
+			ch = 1;
+			cout << temp->data << ": lines " << temp->LineNum << "\t";
+		}
+		temp = temp->link;
+	}
+	if (ch == 0)
+		cout << "Word not found";
+	cout << endl;
+	
 }

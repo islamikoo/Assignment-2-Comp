@@ -7,7 +7,7 @@ typedef std::string ListElement;
 struct Node
 {
 	ListElement data;
-	int LineNum;
+	std::string LineNum = "";
 	int NumOfOcc=1;
 	Node* link;
 };
@@ -18,24 +18,22 @@ private:
 	int NumOfChars;
 	int NumOfElem;
 	Node* head;
-	Node* Locations[27];
 public:
 	MyList();
 	void insert(const ListElement& ,int);
-	void remove(const ListElement& );
 	void FileRead(std::string );
-	void SetUpList();
 	/////// Assignment Methods
 	void wordCount();
 	void distWords();
 	void charCount();
 	void frequentWord();
-	void countWord(const ListElement&);
-	void starting(const ListElement&);
-	void containing(const ListElement&);
+	void countWord(ListElement&);
+	void starting(ListElement&);
+	void containing(ListElement&);
+	void search(ListElement&);
 	/////////////
 	void Execute(std::string );
-	void Check(ListElement );
+	void Check(std::string );
 };
 
 
