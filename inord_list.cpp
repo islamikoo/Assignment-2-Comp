@@ -149,6 +149,8 @@ void MyList::Check(string Command)
 		countWord(arr[1]);
 	else if (arr[0] == "starting")
 		starting(arr[1]);
+	else if (arr[0] == "containing")
+		containing(arr[1]);
 	else
 		cout << "Undefined command" << endl;
 }
@@ -227,6 +229,21 @@ void MyList::starting(const ListElement& word)
 	while (temp != NULL)
 	{
 		if (temp->data.substr(0, length) == word)
+			cout << temp->data << ": " << temp->NumOfOcc << "\t";
+		temp = temp->link;
+	}
+	cout << endl;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::containing(const ListElement& word)
+{
+	int length = word.length();
+	Node* temp = head;
+	while (temp != NULL)
+	{
+		if ((temp->data.find(word)+1))
 			cout << temp->data << ": " << temp->NumOfOcc << "\t";
 		temp = temp->link;
 	}

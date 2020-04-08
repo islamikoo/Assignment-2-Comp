@@ -4,3 +4,4 @@ charCount
 frequentWord
 countWord eslam
 starting es
+containing ab
