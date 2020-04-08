@@ -29,6 +29,7 @@ public:
 	void wordCount();
 	void distWords();
 	void charCount();
+	void frequentWord();
 	/////////////
 	void Execute(std::string );
 	void Check(ListElement );

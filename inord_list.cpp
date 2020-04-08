@@ -115,12 +115,14 @@ void MyList::Execute(string FileName)
 
 void MyList::Check(string Command)
 {
-	if(Command == "wordCount")
+	if (Command == "wordCount")
 		wordCount();
-	else if(Command == "distWords")
+	else if (Command == "distWords")
 		distWords();
-	else if(Command == "charCount")
+	else if (Command == "charCount")
 		charCount();
+	else if (Command == "frequentWord")
+		frequentWord();
 	else
 		cout << "Undefined command" << endl;
 }
@@ -150,7 +152,28 @@ void MyList::distWords()
 
 void MyList::charCount()
 {
-	cout << NumOfChars-1 << " characters" << endl;
+	cout << NumOfChars << " characters" << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////
+
+void MyList::frequentWord()
+{
+	Node* temp = head;
+	int max = temp->NumOfOcc;
+	while (temp->link != NULL)
+	{
+		if (max < temp->link->NumOfOcc)
+			max = temp->link->NumOfOcc;
+		temp = temp->link;
+	}
+	temp = head;
+	cout << "Most frequent word is: ";
+	while (temp != NULL)
+	{
+		if(temp->NumOfOcc == max && temp->data != "a" && temp->data != "an" && temp->data != "the" && temp->data != "in" && temp->data != "on" && temp->data != "of" && temp->data != "and" && temp->data != "is" && temp->data != "are")
+			cout << temp->data << " ";
+		temp = temp->link;
+	}
+	cout << endl;
+}
