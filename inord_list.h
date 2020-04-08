@@ -31,6 +31,7 @@ public:
 	void charCount();
 	void frequentWord();
 	void countWord(const ListElement&);
+	void starting(const ListElement&);
 	/////////////
 	void Execute(std::string );
 	void Check(ListElement );

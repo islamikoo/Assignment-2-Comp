@@ -137,16 +137,18 @@ void MyList::Check(string Command)
 		arr[i] = tmp;
 		i++;
 	} while (ss);
-		if (arr[0] == "wordCount")
-			wordCount();
-		else if (arr[0] == "distWords")
-			distWords();
-		else if (arr[0] == "charCount")
-			charCount();
-		else if (arr[0] == "frequentWord")
-			frequentWord();
-		else if (arr[0] == "countWord")
-			countWord(arr[1]);
+	if (arr[0] == "wordCount")
+		wordCount();
+	else if (arr[0] == "distWords")
+		distWords();
+	else if (arr[0] == "charCount")
+		charCount();
+	else if (arr[0] == "frequentWord")
+		frequentWord();
+	else if (arr[0] == "countWord")
+		countWord(arr[1]);
+	else if (arr[0] == "starting")
+		starting(arr[1]);
 	else
 		cout << "Undefined command" << endl;
 }
@@ -214,4 +216,19 @@ void MyList::countWord(const ListElement& word)
 		temp = temp->link;
 	}
 	cout << temp->data << " is repeated " << temp->NumOfOcc << " times" << endl;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::starting(const ListElement& word)
+{
+	int length = word.length();
+	Node* temp = head;
+	while (temp != NULL)
+	{
+		if (temp->data.substr(0, length) == word)
+			cout << temp->data << ": " << temp->NumOfOcc << "\t";
+		temp = temp->link;
+	}
+	cout << endl;
 }
