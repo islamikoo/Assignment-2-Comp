@@ -2,3 +2,4 @@ wordCount
 distWords
 charCount
 frequentWord
+countWord eslam

@@ -17,6 +17,15 @@ void UselessFuncts::str_replace(string &word,const string &chars)
 			x = ' ';
 }
 
+int UselessFuncts::str_numofchar(const string &word,const char &character)
+{
+	int i = 0;
+	for (const char& x : word)
+		if (x == character)
+			i++;
+	return i;
+}
+
 ///////////////////////////////////////////////////////////////////////
 
 MyList::MyList()
@@ -115,14 +124,29 @@ void MyList::Execute(string FileName)
 
 void MyList::Check(string Command)
 {
-	if (Command == "wordCount")
-		wordCount();
-	else if (Command == "distWords")
-		distWords();
-	else if (Command == "charCount")
-		charCount();
-	else if (Command == "frequentWord")
-		frequentWord();
+
+	int i = 0;
+	int length = UselessFuncts::str_numofchar(Command,' ') + 1;
+	string* arr = new string[length];
+	istringstream ss(Command);
+	do
+	{
+		string tmp;
+		if (!(ss >> tmp))
+			break;
+		arr[i] = tmp;
+		i++;
+	} while (ss);
+		if (arr[0] == "wordCount")
+			wordCount();
+		else if (arr[0] == "distWords")
+			distWords();
+		else if (arr[0] == "charCount")
+			charCount();
+		else if (arr[0] == "frequentWord")
+			frequentWord();
+		else if (arr[0] == "countWord")
+			countWord(arr[1]);
 	else
 		cout << "Undefined command" << endl;
 }
@@ -176,4 +200,18 @@ void MyList::frequentWord()
 		temp = temp->link;
 	}
 	cout << endl;
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void MyList::countWord(const ListElement& word)
+{
+	Node* temp = head;
+	while (temp != NULL)
+	{
+		if (temp->data == word)
+			break;
+		temp = temp->link;
+	}
+	cout << temp->data << " is repeated " << temp->NumOfOcc << " times" << endl;
 }

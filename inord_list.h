@@ -30,6 +30,7 @@ public:
 	void distWords();
 	void charCount();
 	void frequentWord();
+	void countWord(const ListElement&);
 	/////////////
 	void Execute(std::string );
 	void Check(ListElement );
@@ -42,4 +43,5 @@ class UselessFuncts
 public:
 	static void str_low(std::string& );
 	static void str_replace(std::string& ,const std::string& );
+	static int str_numofchar(const std::string&, const char&);
 };
