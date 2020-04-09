@@ -17,12 +17,17 @@ void UselessFuncts::str_replace(string &word,const string &chars)
 			x = ' ';
 }
 
-int UselessFuncts::str_numofchar(const string &word,const char &character)
+int UselessFuncts::str_numofwords(const string &word)
 {
 	int i = 0;
-	for (const char& x : word)
-		if (x == character)
-			i++;
+	istringstream ss(word);
+	do
+	{
+		string tmp;
+		if (!(ss >> tmp))
+			break;
+		i++;
+	} while (ss);
 	return i;
 }
 
@@ -45,18 +50,17 @@ void MyList::insert(const ListElement& e, int x)
 	{
 		if (head != NULL && e == head->data)
 		{
-			head->LineNum += (" " + to_string(x));
 			head->NumOfOcc++;
+			if (head->LineNum.find(to_string(x)) != string::npos)
+				goto J1;
+			head->LineNum += (" " + to_string(x));
 		}
 		else
 		{
 			NewNode->link = head;
 			head = NewNode;
 			head->LineNum = to_string(x);
-		}
-		if (head->LineNum.find(to_string(x)) != string::npos)
-			goto J1;
-		head->LineNum += to_string(x);
+		}		
 	}
 	else
 	{
@@ -66,7 +70,7 @@ void MyList::insert(const ListElement& e, int x)
 		if (temp->link != NULL && e == temp->link->data)
 		{
 			temp->link->NumOfOcc++;
-			if ((temp->link->LineNum.find(to_string(x)) + 1))
+			if (temp->link->LineNum.find(to_string(x)) != string::npos)
 				goto J1;
 			temp->link->LineNum += (" " + to_string(x));
 		}
@@ -92,7 +96,7 @@ void MyList::FileRead(string FileName)
     myfile.open(FileName);
    if(!myfile.is_open())
    {
-      perror("File not found");
+      cout << "File not found" << endl;
       exit(EXIT_FAILURE);
    }
     while(getline(myfile, line))
@@ -122,7 +126,7 @@ void MyList::Execute(string FileName)
     myfile.open(FileName);
    if(!myfile.is_open())
    {
-      perror("File not found");
+	   cout << "File not found" << endl;
       exit(EXIT_FAILURE);
    }
    
@@ -140,7 +144,7 @@ void MyList::Check(string Command)
 {
 
 	int i = 0;
-	int length = UselessFuncts::str_numofchar(Command,' ') + 1;
+	int length = UselessFuncts::str_numofwords(Command);
 	string* arr = new string[length];
 	istringstream ss(Command);
 	do
@@ -208,7 +212,7 @@ void MyList::distWords()
 
 void MyList::charCount()
 {
-	cout << NumOfChars << " characters" << endl;
+	cout << NumOfChars-1 << " characters" << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -313,7 +317,7 @@ void MyList::search(ListElement& word)
 		if (temp->data.find(word) != string::npos)
 		{
 			ch = 1;
-			cout << temp->data << ": lines " << temp->LineNum << "\n";
+			cout << temp->data << ":\tlines " << temp->LineNum << "\n";
 		}
 		temp = temp->link;
 	}

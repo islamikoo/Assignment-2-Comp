@@ -1,9 +1,6 @@
 wordCount
 distWords
 charCount
-
 frequentWord
 countWord eslam
-starting es
-containing es
 search T

@@ -43,5 +43,5 @@ class UselessFuncts
 public:
 	static void str_low(std::string& );
 	static void str_replace(std::string& ,const std::string& );
-	static int str_numofchar(const std::string&, const char&);
+	static int str_numofwords(const std::string&);
 };
