@@ -92,7 +92,7 @@ void MyList::FileRead(string FileName)
     myfile.open(FileName);
    if(!myfile.is_open())
    {
-      perror("File doesn't exist !!");
+      perror("File not found");
       exit(EXIT_FAILURE);
    }
     while(getline(myfile, line))
@@ -122,12 +122,15 @@ void MyList::Execute(string FileName)
     myfile.open(FileName);
    if(!myfile.is_open())
    {
-      perror("File doesn't exist !!");
+      perror("File not found");
       exit(EXIT_FAILURE);
    }
    
-   while(getline(myfile, line))
-	   Check(line);
+   while (getline(myfile, line))
+   {
+	   if(line.length() != 0)
+		   Check(line);
+   }
    myfile.close();
 }
 
@@ -148,22 +151,34 @@ void MyList::Check(string Command)
 		arr[i] = tmp;
 		i++;
 	} while (ss);
-	if (arr[0] == "wordCount")
-		wordCount();
-	else if (arr[0] == "distWords")
-		distWords();
-	else if (arr[0] == "charCount")
-		charCount();
-	else if (arr[0] == "frequentWord")
-		frequentWord();
-	else if (arr[0] == "countWord")
-		countWord(arr[1]);
-	else if (arr[0] == "starting")
-		starting(arr[1]);
-	else if (arr[0] == "containing")
-		containing(arr[1]);
-	else if (arr[0] == "search")
-		search(arr[1]);
+	if (arr[0] == "wordCount" || arr[0] == "distWords" || arr[0] == "charCount" || arr[0] == "frequentWord")
+		if (length == 1)
+		{
+			if (arr[0] == "wordCount")
+				wordCount();
+			else if (arr[0] == "distWords")
+				distWords();
+			else if (arr[0] == "charCount")
+				charCount();
+			else
+				frequentWord();
+		}
+		else
+			cout << "Incorrect number of arguments" << endl;
+	else if (arr[0] == "countWord" || arr[0] == "starting" || arr[0] == "containing" || arr[0] == "search")
+		if (length == 2)
+		{
+			if (arr[0] == "countWord")
+				countWord(arr[1]);
+			else if (arr[0] == "starting")
+				starting(arr[1]);
+			else if (arr[0] == "containing")
+				containing(arr[1]);
+			else
+				search(arr[1]);
+		}
+		else
+			cout << "Incorrect number of arguments" << endl;
 	else
 		cout << "Undefined command" << endl;
 }
