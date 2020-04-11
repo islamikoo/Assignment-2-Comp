@@ -1,6 +1,1 @@
-wordCount
-distWords
-charCount
-frequentWord
-countWord eslam
 search T

@@ -94,15 +94,19 @@ void MyList::FileRead(string FileName)
 	int i=1;
     ifstream myfile;
     myfile.open(FileName);
-   if(!myfile.is_open())
-   {
-      cout << "File not found" << endl;
-      exit(EXIT_FAILURE);
-   }
+    if(!myfile.is_open())
+    {
+		cout << "File not found" << endl;
+        exit(EXIT_FAILURE);
+    }
+    char x;
+    while (myfile.get(x))
+		NumOfChars++;
+	myfile.clear();
+	myfile.seekg(0, ios::beg);
     while(getline(myfile, line))
 	{
 		UselessFuncts::str_replace(line, chars);
-		NumOfChars += line.length() + 1 ;
 		istringstream ss(line);
 		do
 		{
@@ -212,7 +216,7 @@ void MyList::distWords()
 
 void MyList::charCount()
 {
-	cout << NumOfChars-1 << " characters" << endl;
+	cout << NumOfChars << " characters" << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////
